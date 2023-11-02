@@ -185,33 +185,55 @@ def interface_visual():
 
             anos_vigencia = list(range(anos_vigencia_aux))
 
-            salario_liquido, irrf_recolhido, anos_vigencia = logicacalculadora.enviardadosparagrafico()
+            salario_liquido, irrf_recolhido, anos_vigencia, salario_base, adicoes, salario_base_de_calculo, total_deducoes = logicacalculadora.enviardadosparagrafico()
 
-            salario_liquido_list = list(range(anos_vigencia_aux))
-
-            irrf_recolhido_list = list(range(anos_vigencia_aux))
-
+            salario_liquido_list         = list(range(anos_vigencia_aux))
+            irrf_recolhido_list          = list(range(anos_vigencia_aux))
+            salario_base_list            = list(range(anos_vigencia_aux))
+            adicoes_list                 = list(range(anos_vigencia_aux))
+            salario_base_de_calculo_list = list(range(anos_vigencia_aux))
+            total_deducoes_list          = list(range(anos_vigencia_aux))
 
             if(anos_vigencia_aux == 1):
-                salario_liquido_list[0] = salario_liquido * (mes_fim - mes_inicio + 1)
-                irrf_recolhido_list[0]  = irrf_recolhido * (mes_fim - mes_inicio + 1)
+                salario_liquido_list[0]         = salario_liquido         * (mes_fim - mes_inicio + 1)
+                irrf_recolhido_list[0]          = irrf_recolhido          * (mes_fim - mes_inicio + 1)
+                salario_base_list[0]            = salario_base            * (mes_fim - mes_inicio + 1)
+                adicoes_list[0]                 = adicoes                 * (mes_fim - mes_inicio + 1)
+                salario_base_de_calculo_list[0] = salario_base_de_calculo * (mes_fim - mes_inicio + 1)
+                total_deducoes_list[0]          = total_deducoes          * (mes_fim - mes_inicio + 1)
 
             elif(anos_vigencia_aux > 1):
-                salario_liquido_list[0] = salario_liquido * (12 - mes_inicio + 1)
-                irrf_recolhido_list[0]  = irrf_recolhido * (12 - mes_inicio + 1)
+                salario_liquido_list[0]         = salario_liquido         * (12 - mes_inicio + 1)
+                irrf_recolhido_list[0]          = irrf_recolhido          * (12 - mes_inicio + 1)
+                salario_base_list[0]            = salario_base            * (12 - mes_inicio + 1)
+                adicoes_list[0]                 = adicoes                 * (12 - mes_inicio + 1)
+                salario_base_de_calculo_list[0] = salario_base_de_calculo * (12 - mes_inicio + 1)
+                total_deducoes_list[0]          = total_deducoes          * (12 - mes_inicio + 1)
+
                 for i in range(1, (anos_vigencia_aux - 1), 1):
-                    salario_liquido_list[i] = salario_liquido * 12
-                    irrf_recolhido_list[i]  = irrf_recolhido  * 12
-                salario_liquido_list[anos_vigencia_aux - 1] = salario_liquido     * mes_fim
-                irrf_recolhido_list[anos_vigencia_aux - 1]  = irrf_recolhido * mes_fim
+                    salario_liquido_list[i]         = salario_liquido         * 12
+                    irrf_recolhido_list[i]          = irrf_recolhido          * 12
+                    salario_base_list[i]            = salario_base            * 12
+                    adicoes_list[i]                 = adicoes                 * 12
+                    salario_base_de_calculo_list[i] = salario_base_de_calculo * 12
+                    total_deducoes_list[i]          = total_deducoes          * 12
 
-            grafico = Grafico(salario_liquido_list, irrf_recolhido_list, anos_vigencia, -1, nome_contribuinte)
+                salario_liquido_list[anos_vigencia_aux - 1]         = salario_liquido         * mes_fim
+                irrf_recolhido_list[anos_vigencia_aux - 1]          = irrf_recolhido          * mes_fim
+                salario_base_list[anos_vigencia_aux - 1]            = salario_base            * mes_fim
+                adicoes_list[anos_vigencia_aux - 1]                 = adicoes                 * mes_fim
+                salario_base_de_calculo_list[anos_vigencia_aux - 1] = salario_base_de_calculo * mes_fim
+                total_deducoes_list[anos_vigencia_aux - 1]          = total_deducoes          * mes_fim
 
-            print(salario_liquido_list)
-            print(irrf_recolhido_list)
-            print(anos_vigencia)
 
-            grafico.criargrafico()
+            grafico = Grafico(salario_liquido_list, irrf_recolhido_list, anos_vigencia, -1,
+                              salario_base_list, adicoes_list,
+                              salario_base_de_calculo_list, total_deducoes_list,
+                              nome_contribuinte)
+
+            grafico.criargrafico1()
+            grafico.criargrafico2()
+            grafico.criargrafico3()
 
         elif event =='Atualizar descontos cabiveis no IRRF':
 
