@@ -60,9 +60,9 @@ class LogicaCalculadora:
 
         desconto_dependente = self.numero_dependentes * 189.59
 
-        total_deducoes = desconto_inss + desconto_dependente + self.pensao_alimenticia + self.outros_descontos
+        self.total_deducoes = desconto_inss + desconto_dependente + self.pensao_alimenticia + self.outros_descontos
 
-        self.salario_base_de_calculo = self.salario_bruto - total_deducoes
+        self.salario_base_de_calculo = self.salario_bruto - self.total_deducoes
 
         if (self.salario_base_de_calculo <= 2112.00):
             self.irrf_recolhido = 0
@@ -95,7 +95,7 @@ class LogicaCalculadora:
 
     def enviardadosparagrafico(self):
 
-        return self.salario_liquido, self.irrf_recolhido, self.anos_vigencia
+        return self.salario_liquido, self.irrf_recolhido, self.anos_vigencia, self.salario_base, (self.bonus_tempo + self.bonus_formacao + self.bonus_periculosidade), self.salario_base_de_calculo, self.total_deducoes
 
     def enviardadospararelatorio(self):
 
