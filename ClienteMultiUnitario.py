@@ -16,6 +16,7 @@ class ClienteMultiUnitario:
         self.bonus_tempo_list              =          list(range(self.n_entradas))
         self.bonus_formacao_list           =          list(range(self.n_entradas))
         self.bonus_periculosidade_list     =          list(range(self.n_entradas))
+        self.adicoes                       =          list(range(self.n_entradas))
         self.salario_bruto_list            =          list(range(self.n_entradas))
 
         self.mesinicio_list =                    list(range(self.n_entradas))
@@ -23,9 +24,12 @@ class ClienteMultiUnitario:
         self.mesfim_list =                       list(range(self.n_entradas))
         self.anofim_list =                       list(range(self.n_entradas))
 
+        self.anos_vigencia_aux_list =            list(range(self.n_entradas))
+
         self.numero_dependentes_list      = list(range(self.n_entradas))
         self.pensao_alimenticia_list      = list(range(self.n_entradas))
         self.outros_descontos_list        = list(range(self.n_entradas))
+        self.total_deducoes               = list(range(self.n_entradas))
         self.salario_base_de_calculo_list = list(range(self.n_entradas))
 
         self.salario_liquido_list      = list(range(self.n_entradas))
@@ -52,6 +56,7 @@ class ClienteMultiUnitario:
             self.anoinicio_list[i] =           self.entradas_de_multiplas_pessoas.iloc[i, 5]
             self.mesfim_list[i] =              self.entradas_de_multiplas_pessoas.iloc[i, 6]
             self.anofim_list[i] =              self.entradas_de_multiplas_pessoas.iloc[i, 7]
+            self.anos_vigencia_aux_list[i] =      self.anofim_list[i] - self.anoinicio_list[i] + 1
 
             self.numero_dependentes_list[i]      =  self.entradas_de_multiplas_pessoas.iloc[i, 8]
             self.pensao_alimenticia_list[i]      =  self.entradas_de_multiplas_pessoas.iloc[i, 9]
@@ -85,17 +90,42 @@ class ClienteMultiUnitario:
 
             if (self.tipooferta_list[j] == 1):
 
-                self.salario_liquido_list[j], self.irrf_recolhido_list[j], self.anos_vigencia_list[j] = logicacalculadoramultipla.enviardadosparagrafico()
+                self.salario_liquido_list[j], self.irrf_recolhido_list[j], self.anos_vigencia_list[j],
+                self.salario_base_list[j], self.adicoes[j],
+                self.salario_base_de_calculo_list[j], self.total_deducoes[j] = logicacalculadoramultipla.enviardadosparagrafico()
 
-                grafico = Grafico(self.salario_liquido_list[j], self.irrf_recolhido_list[j], self.anos_vigencia_list[j], j)
+                #multiplicadores
 
-                grafico.criargrafico()
+                grafico = Grafico(self.salario_liquido_list[j], self.irrf_recolhido_list[j], self.anos_vigencia_list[j], j,
+                                  self.salario_base_list[j], (self.bonus_tempo_list[j] + self.bonus_formacao_list[j] + self.bonus_periculosidade_list[j]),
+                                  self.salario_base_de_calculo_list[j], self.total_deducoes[j],
+                                  self.nome_contribuinte_list[j])
+
+                grafico.criargrafico1()
+                grafico.criargrafico2()
+                grafico.criargrafico3()
 
             if (self.tipooferta_list[j] == 2):
 
                 self.salario_base_list[j], self.salario_bruto_list[j], self.salario_base_de_calculo_list[j],
                 self.anos_vigencia_list[j],
                 self.salario_liquido_list[j], self.irrf_recolhido_list[j], self.aliquota_list[j] = logicacalculadoramultipla.enviardadospararelatorio()
+
+                if(self.anos_vigencia_aux_list[j] == 1):
+                    self.salario_base_list[j] = self.salario_base_list[j] * (self.mesfim_list[j] - self.mesinicio_list + 1)
+                    self.salario_bruto_list[j] = self.salario_bruto_list * (self.mesfim_list[j] - self.mesinicio_list + 1)
+                    self.salario_base_de_calculo_list[j] = self.salario_base_de_calculo_list * (self.mesfim_list[j] - self.mesinicio_list + 1)
+                    self.salario_liquido_list[j] = self.salario_liquido_list * (self.mesfim_list[j] - self.mesinicio_list + 1)
+                    self.irrf_recolhido_list[j]  = self.irrf_recolhido_list * (self.mesfim_list[j] - self.mesinicio_list + 1)
+                    self.aliquota_list[j] = self.irrf_recolhido_list[j]/self.salario_bruto_list[j]
+
+                elif(self.anos_vigencia_aux_list[j] > 1):
+                    self.salario_base_list[j] = self.salario_base_list[j] * ((12 - self.mesinicio_list[j] + 1) + ((self.anos_vigencia_aux_list[j] - 2) * 12) + (self.mesfim_list[j]))
+                    self.salario_bruto_list[j] = self.salario_bruto_list[j] * ((12 - self.mesinicio_list[j] + 1) + ((self.anos_vigencia_aux_list[j] - 2) * 12) + (self.mesfim_list[j]))
+                    self.salario_base_de_calculo_list[j] = self.salario_base_de_calculo_list[j] * ((12 - self.mesinicio_list[j] + 1) + ((self.anos_vigencia_aux_list[j] - 2) * 12) + (self.mesfim_list[j]))
+                    self.salario_liquido_list[j] = self.salario_liquido_list[j] * ((12 - self.mesinicio_list[j] + 1) + ((self.anos_vigencia_aux_list[j] - 2) * 12) + (self.mesfim_list[j]))
+                    self.irrf_recolhido_list[j]  = self.irrf_recolhido_list[j] * ((12 - self.mesinicio_list[j] + 1) + ((self.anos_vigencia_aux_list[j] - 2) * 12) + (self.mesfim_list[j]))
+                    self.aliquota_list[j] = self.irrf_recolhido_list[j]/self.salario_bruto_list[j]
 
                 relatoriopdf = RelatorioPDF(self.salario_base_list[j], self.salario_bruto_list[j], self.salario_base_de_calculo_list[j],
                 self.anos_vigencia_list[j],
