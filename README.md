@@ -63,7 +63,7 @@ Após rodar a ferramenta Lizard para todos os arquivos do sistema, obtivemos o s
 - A mensagem de alerta indica que existe uma função complexa demais entre todas analisadas, a função interface_visual(), com CCN = 18, podendo ser uma boa candidata a refatoração.
 - Embora não exceda o limite (CCN > 15), a função formulas_entrada() possui um valor relativamente alto, CCN = 11, e deve avaliada com atenção.
 
-  O relatório em detalhes pode ser obtido [aqui](RelatorioLizard.pdf)
+  O relatório em detalhes pode ser obtido [aqui](RelatórioLizard.pdf) 
 
 ## Retafotações
 
