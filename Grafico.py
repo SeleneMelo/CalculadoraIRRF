@@ -23,13 +23,13 @@ class Grafico:
 
         self.nome_contribuinte  = nome_contribuinte
 
-    def adddin(x, y):
+    def formatar_texto_da_barra_de_baixo_do_grafico(x, y):
             for i in range(len(x)):
                 plt.text(i, y[i]/2, 'R${:,.2f}'.format(y[i]).replace(",", "X").replace(".", ",").replace("X", "."), ha = 'center', rotation=90)
 
-    def adddin2(x, yp, y):
+    def formatar_texto_da_barra_de_cima_do_grafico(x, yp, y):
         for i in range(len(x)):
-            plt.text(i, 1.1*yp[i], 'R${:,.2f}'.format(y[i]).replace(",", "X").replace(".", ",").replace("X", "."), ha = 'center', rotation=60, wrap=True)
+            plt.text(i, 1.1*yp[i], 'R${:,.2f}'.format(y[i]).replace(",", "X").replace(".", ",").replace("X", "."), ha = 'center', rotation=0, wrap=True)
 
     def criargrafico1(self):
 
@@ -56,8 +56,8 @@ class Grafico:
         tick = mtick.StrMethodFormatter(fmt)
         ax1.yaxis.set_major_formatter(tick)
 
-        self.adddin(self.anos_vigencia, self.salario_base)
-        self.adddin2(self.anos_vigencia, self.salario_base, self.aditivos)
+        self.formatar_texto_da_barra_de_baixo_do_grafico(self.anos_vigencia, self.salario_base)
+        self.formatar_texto_da_barra_de_cima_do_grafico(self.anos_vigencia, self.salario_base, self.aditivos)
 
         fig1 = plt.gcf()
         plt.show()
@@ -88,8 +88,8 @@ class Grafico:
         tick = mtick.StrMethodFormatter(fmt)
         ax2.yaxis.set_major_formatter(tick)
 
-        self.adddin(self.anos_vigencia, self.salario_base_de_calculo)
-        self.adddin2(self.anos_vigencia, self.salario_base_de_calculo, self.deducoes)
+        self.formatar_texto_da_barra_de_baixo_do_grafico(self.anos_vigencia, self.salario_base_de_calculo)
+        self.formatar_texto_da_barra_de_cima_do_grafico(self.anos_vigencia, self.salario_base_de_calculo, self.deducoes)
 
         fig2 = plt.gcf()
         plt.show()
@@ -120,8 +120,8 @@ class Grafico:
         tick = mtick.StrMethodFormatter(fmt)
         ax3.yaxis.set_major_formatter(tick)
 
-        self.adddin(self.anos_vigencia, self.salario_liquido)
-        self.adddin2(self.anos_vigencia, self.salario_liquido, self.irrf_recolhido)
+        self.formatar_texto_da_barra_de_baixo_do_grafico(self.anos_vigencia, self.salario_liquido)
+        self.formatar_texto_da_barra_de_cima_do_grafico(self.anos_vigencia, self.salario_liquido, self.irrf_recolhido)
 
         fig3 = plt.gcf()
         plt.show()
