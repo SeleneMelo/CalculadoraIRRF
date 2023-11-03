@@ -1,9 +1,3 @@
-import numpy as np
-import numpy_financial as npf
-import pandas as pd
-
-from copy import deepcopy
-from datetime import datetime as dt
 
 class LogicaCalculadora:
 
@@ -24,6 +18,7 @@ class LogicaCalculadora:
         self.ano_inicio             = ano_inicio
         self.mes_fim                = mes_fim
         self.ano_fim                = ano_fim
+        self.anos_vigencia_aux      = self.ano_fim - self.ano_inicio + 1
 
         self.numero_dependentes     = numero_dependentes
         self.pensao_alimenticia     = pensao_alimenticia
@@ -93,6 +88,73 @@ class LogicaCalculadora:
 
         for i in range(0, aux, 1):
             self.anos_vigencia[i] = str(self.ano_inicio + i)
+
+    def preparar_graficos(self, salario_liquido, irrf_recolhido, salario_base, adicoes, salario_base_de_calculo, total_deducoes):
+    
+        salario_liquido_list         = list(range(self.anos_vigencia_aux))
+        irrf_recolhido_list          = list(range(self.anos_vigencia_aux))
+        salario_base_list            = list(range(self.anos_vigencia_aux))
+        adicoes_list                 = list(range(self.anos_vigencia_aux))
+        salario_base_de_calculo_list = list(range(self.anos_vigencia_aux))
+        total_deducoes_list          = list(range(self.anos_vigencia_aux))
+
+        if(self.anos_vigencia_aux == 1):
+
+            salario_liquido_list[0]         = salario_liquido         * (self.mes_fim - self.mes_inicio + 1)
+            irrf_recolhido_list[0]          = irrf_recolhido          * (self.mes_fim - self.mes_inicio + 1)
+            salario_base_list[0]            = salario_base            * (self.mes_fim - self.mes_inicio + 1)
+            adicoes_list[0]                 = adicoes                 * (self.mes_fim - self.mes_inicio + 1)
+            salario_base_de_calculo_list[0] = salario_base_de_calculo * (self.mes_fim - self.mes_inicio + 1)
+            total_deducoes_list[0]          = total_deducoes          * (self.mes_fim - self.mes_inicio + 1)
+
+        elif(self.anos_vigencia_aux > 1):
+
+            salario_liquido_list[0]         = salario_liquido         * (12 - self.mes_inicio + 1)
+            irrf_recolhido_list[0]          = irrf_recolhido          * (12 - self.mes_inicio + 1)
+            salario_base_list[0]            = salario_base            * (12 - self.mes_inicio + 1)
+            adicoes_list[0]                 = adicoes                 * (12 - self.mes_inicio + 1)
+            salario_base_de_calculo_list[0] = salario_base_de_calculo * (12 - self.mes_inicio + 1)
+            total_deducoes_list[0]          = total_deducoes          * (12 - self.mes_inicio + 1)
+
+            for i in range(1, (self.anos_vigencia_aux - 1), 1):
+
+                salario_liquido_list[i]         = salario_liquido         * 12
+                irrf_recolhido_list[i]          = irrf_recolhido          * 12
+                salario_base_list[i]            = salario_base            * 12
+                adicoes_list[i]                 = adicoes                 * 12
+                salario_base_de_calculo_list[i] = salario_base_de_calculo * 12
+                total_deducoes_list[i]          = total_deducoes          * 12
+
+            salario_liquido_list[self.anos_vigencia_aux - 1]         = salario_liquido         * self.mes_fim
+            irrf_recolhido_list[self.anos_vigencia_aux - 1]          = irrf_recolhido          * self.mes_fim
+            salario_base_list[self.anos_vigencia_aux - 1]            = salario_base            * self.mes_fim
+            adicoes_list[self.anos_vigencia_aux - 1]                 = adicoes                 * self.mes_fim
+            salario_base_de_calculo_list[self.anos_vigencia_aux - 1] = salario_base_de_calculo * self.mes_fim
+            total_deducoes_list[self.anos_vigencia_aux - 1]          = total_deducoes          * self.mes_fim
+
+        return salario_liquido_list, irrf_recolhido_list, salario_base_list, adicoes_list, salario_base_de_calculo_list, total_deducoes_list
+    
+    def preparar_relatorio(self, salario_base, salario_bruto, salario_base_de_calculo, salario_liquido, irrf_recolhido):
+    
+        if(self.anos_vigencia_aux == 1):
+
+            salario_base = salario_base * (self.mes_fim - self.mes_inicio + 1)
+            salario_bruto = salario_bruto * (self.mes_fim - self.mes_inicio + 1) 
+            salario_base_de_calculo = salario_base_de_calculo * (self.mes_fim - self.mes_inicio + 1)
+            salario_liquido = salario_liquido * (self.mes_fim - self.mes_inicio + 1)
+            irrf_recolhido  = irrf_recolhido * (self.mes_fim - self.mes_inicio + 1)
+            aliquota_ = irrf_recolhido/salario_bruto
+
+        elif(self.anos_vigencia_aux > 1):
+
+            salario_base = salario_base * ((12 - self.mes_inicio + 1) + ((self.anos_vigencia_aux - 2) * 12) + (self.mes_fim))
+            salario_bruto = salario_bruto * ((12 - self.mes_inicio + 1) + ((self.anos_vigencia_aux - 2) * 12) + (self.mes_fim))
+            salario_base_de_calculo = salario_base_de_calculo * ((12 - self.mes_inicio + 1) + ((self.anos_vigencia_aux - 2) * 12) + (self.mes_fim))
+            salario_liquido = salario_liquido * ((12 - self.mes_inicio + 1) + ((self.anos_vigencia_aux - 2) * 12) + (self.mes_fim))
+            irrf_recolhido  = irrf_recolhido * ((12 - self.mes_inicio + 1) + ((self.anos_vigencia_aux - 2) * 12) + (self.mes_fim))
+            aliquota_ = irrf_recolhido/salario_bruto
+
+        return salario_base, salario_bruto, salario_base_de_calculo, salario_liquido, irrf_recolhido, aliquota_
 
     def enviardadosparagrafico(self):
 
