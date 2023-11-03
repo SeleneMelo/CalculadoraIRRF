@@ -5,11 +5,6 @@ import pandas as pd
 from copy import deepcopy
 from datetime import datetime as dt
 
-#Entradas - Início
-
-#Imposto de Renda retido na fonte = [(Salário bruto - dependentes - INSS) X alíquota] - dedução
-#Pesquisar tabela de calculos de INSS e IRRF
-
 class LogicaCalculadora:
 
     def __init__(self, salario_base, bonus_tempo, bonus_formacao, bonus_periculosidade,
@@ -20,6 +15,10 @@ class LogicaCalculadora:
         self.bonus_tempo                   = bonus_tempo
         self.bonus_formacao                = bonus_formacao
         self.bonus_periculosidade          = bonus_periculosidade
+        self.salario_bruto                 = 0
+        self.bonus                         = 0
+        self.desconto_inss                 = 0
+        self.desconto_dependente           = 0
 
         self.mes_inicio             = mes_inicio
         self.ano_inicio             = ano_inicio
@@ -31,38 +30,41 @@ class LogicaCalculadora:
         self.outros_descontos       = outros_descontos
         self.tipooferta             = tipooferta
 
-        self.salario_base_de_calculo = None
-        self.salario_liquido        = None
+        self.salario_base_de_calculo = 0
+        self.salario_liquido        = 0
         self.anos_vigencia            = None
         self.irrf_recolhido = 0
 
+    def calculo_bonus_e_salario_bruto(self):
 
-    def formulas_entrada(self):
+        self.bonus = self.bonus_tempo + self.bonus_formacao + self.bonus_periculosidade
 
-        self.salario_bruto = self.salario_base + self.bonus_tempo + self.bonus_formacao + self.bonus_periculosidade
+        self.salario_bruto = self.salario_base + self.bonus
 
-        desconto_inss = 0
+    def calculo_deducoes_e_salario_base(self):
 
         if (self.salario_bruto <= 1320.00):
-            desconto_inss = self.salario_bruto * 0.075
+            self.desconto_inss = self.salario_bruto * 0.075
 
         elif (1320.01 <= self.salario_bruto <= 2571.29):
-            desconto_inss = ((self.salario_bruto - 1320.01) * 0.09) + 99.00
+            self.desconto_inss = ((self.salario_bruto - 1320.01) * 0.09) + 99.00
 
         elif (2571.30 <= self.salario_bruto <= 3856.94):
-            desconto_inss = ((self.salario_bruto - 2571.30) * 0.12) + 112.62 + 99.00
+            self.desconto_inss = ((self.salario_bruto - 2571.30) * 0.12) + 112.62 + 99.00
 
         elif (3856.95 <= self.salario_bruto <= 7507.49):
-            desconto_inss = ((self.salario_bruto - 3856.95) * 0.14) + 154.28 + 112.62 + 99.00
+            self.desconto_inss = ((self.salario_bruto - 3856.95) * 0.14) + 154.28 + 112.62 + 99.00
 
         else:
-            desconto_inss = 876.97
+            self.desconto_inss = 876.97
 
-        desconto_dependente = self.numero_dependentes * 189.59
+        self.desconto_dependente = self.numero_dependentes * 189.59
 
-        self.total_deducoes = desconto_inss + desconto_dependente + self.pensao_alimenticia + self.outros_descontos
+        self.total_deducoes = self.desconto_inss + self.desconto_dependente + self.pensao_alimenticia + self.outros_descontos
 
         self.salario_base_de_calculo = self.salario_bruto - self.total_deducoes
+
+    def calculo_irrf_recolhido_salario_liquido_aliquota(self):
 
         if (self.salario_base_de_calculo <= 2112.00):
             self.irrf_recolhido = 0
@@ -83,15 +85,14 @@ class LogicaCalculadora:
 
         self.aliquota_ = self.irrf_recolhido/self.salario_bruto
 
+    def definir_anos_vigencia(self):
+
         aux = self.ano_fim - self.ano_inicio + 1
 
         self.anos_vigencia = list(range(aux))
 
         for i in range(0, aux, 1):
             self.anos_vigencia[i] = str(self.ano_inicio + i)
-
-    #def enviarirrfrecolhido(self):
-    #    return self.irrf_recolhido
 
     def enviardadosparagrafico(self):
 
