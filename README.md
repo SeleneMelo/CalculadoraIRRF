@@ -67,3 +67,7 @@ Após rodar a ferramenta Lizard para todos os arquivos do sistema, obtivemos o s
   O relatório em detalhes pode ser obtido aqui [link]
 
 ## Retafotações
+
+1) https://github.com/SeleneMelo/CalculadoraIRRF/commit/754132fb8ec5e41659720951666f6bb45624e402
+2) https://github.com/SeleneMelo/CalculadoraIRRF/commit/2005b1dca9a01caedc44bb443e0ce85487952ca8
+3) https://github.com/SeleneMelo/CalculadoraIRRF/commit/24d4f38887ebbf54f5ea0611570402a73a7cbb8b
