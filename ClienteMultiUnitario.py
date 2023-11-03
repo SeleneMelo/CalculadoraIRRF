@@ -43,6 +43,13 @@ class ClienteMultiUnitario:
 
         self.logicacalculadora = None
 
+        self.salario_liquido_list_grafico         = [[0 for i in range(self.anos_vigencia_aux_list)] for j in range(self.n_entradas)]
+        self.irrf_recolhido_list_grafico          = [[0 for i in range(self.anos_vigencia_aux_list)] for j in range(self.n_entradas)]
+        self.salario_base_list_grafico            = [[0 for i in range(self.anos_vigencia_aux_list)] for j in range(self.n_entradas)]
+        self.adicoes_grafico                      = [[0 for i in range(self.anos_vigencia_aux_list)] for j in range(self.n_entradas)]
+        self.salario_base_de_calculo_list_grafico = [[0 for i in range(self.anos_vigencia_aux_list)] for j in range(self.n_entradas)]
+        self.total_deducoes_grafico               = [[0 for i in range(self.anos_vigencia_aux_list)] for j in range(self.n_entradas)]
+
     def prencher_variaveis_multiplas(self):
 
         for i in range(0, self.n_entradas, 1):
@@ -82,17 +89,17 @@ class ClienteMultiUnitario:
 
             if (self.tipooferta_list[j] == 1):
 
-                self.salario_liquido_list[j], self.irrf_recolhido_list[j], self.anos_vigencia_list[j],
-                self.salario_base_list[j], self.adicoes[j],
-                self.salario_base_de_calculo_list[j], self.total_deducoes[j] = logicacalculadoramultipla.enviardadosparagrafico()
+                self.salario_liquido_list_grafico[j][0], self.irrf_recolhido_list_grafico[j][0], self.anos_vigencia_list[j],
+                self.salario_base_list_grafico[j][0], self.adicoes_grafico[j][0],
+                self.salario_base_de_calculo_list_grafico[j][0], self.total_deducoes_grafico[j][0] = logicacalculadoramultipla.enviardadosparagrafico()
 
-                self.salario_liquido_list[j], self.irrf_recolhido_list[j],
-                self.salario_base_list[j], self.adicoes[j],
-                self.salario_base_de_calculo_list[j], self.total_deducoes[j] = preparar_graficos(salario_liquido, irrf_recolhido, adicoes, salario_base_de_calculo, total_deducoes)
+                self.salario_liquido_list_grafico[j], self.irrf_recolhido_list_grafico[j],
+                self.salario_base_list_grafico[j], self.adicoes_grafico[j],
+                self.salario_base_de_calculo_list_grafico[j], self.total_deducoes_grafico[j] = logicacalculadoramultipla.preparar_graficos(self.salario_liquido_list_grafico[j][0], self.irrf_recolhido_list_grafico[j][0], self.salario_base_list_grafico[j][0], self.adicoes_grafico[j][0], self.salario_base_de_calculo_list_grafico[j][0], self.total_deducoes_grafico[j][0])
 
-                grafico = Grafico(self.salario_liquido_list[j], self.irrf_recolhido_list[j], self.anos_vigencia_list[j], j,
-                                  self.salario_base_list[j], (self.bonus_tempo_list[j] + self.bonus_formacao_list[j] + self.bonus_periculosidade_list[j]),
-                                  self.salario_base_de_calculo_list[j], self.total_deducoes[j],
+                grafico = Grafico(self.salario_liquido_list_grafico[j], self.irrf_recolhido_list_grafico[j], self.anos_vigencia_list[j], j,
+                                  self.salario_base_list_grafico[j], self.adicoes_grafico[j],
+                                  self.salario_base_de_calculo_list_grafico[j], self.total_deducoes_grafico[j],
                                   self.nome_contribuinte_list[j])
 
                 grafico.criargrafico1()
@@ -107,7 +114,7 @@ class ClienteMultiUnitario:
 
                 self.salario_base_list[j], self.salario_bruto_list[j],
                 self.salario_base_de_calculo_list[j], self.salario_liquido_list[j],
-                self.irrf_recolhido_list[j] = preparar_relatorio(salario_base, salario_bruto, salario_base_de_calculo, salario_liquido, irrf_recolhido)
+                self.irrf_recolhido_list[j] = logicacalculadoramultipla.preparar_relatorio(self.salario_base_list[j], self.salario_bruto_list[j], self.salario_base_de_calculo_list[j], self.salario_liquido_list[j], self.irrf_recolhido_list[j])
 
                 relatoriopdf = RelatorioPDF(self.salario_base_list[j], self.salario_bruto_list[j], self.salario_base_de_calculo_list[j],
                 self.anos_vigencia_list[j],
