@@ -13,7 +13,6 @@ Trabalho Prático da disciplina de Engenharia de Software II da UFMG
 O presente sistema é uma calculadora do IRRF (Imposto de renda retido na fonte). Ele possui uma interface visual em que o contribuinte entra com seu nome, CPF, informações de salário base, bonificações, periodicidade para a qual deseja calcular e eventuais descontos (dependentes, pensão alimenticia e outros). No modo "Grafico" serão entregues 3 gráficos: Um com seu salário básico e as bonificações, outro com seu salário base de cálculo e as deduções feitas para se chegar nele e o último com o valor de seu salário líquido e de seu IRRF (em reais por ano), o que forma o seu salário base para o calculo do IRRF. No modo "Relatório", o contribuinte tem um relatório com alguns dos valores totais das variáveis anteriormente referidas, além de sua aliquota efetiva de IRRF (valor do irrf/(salário base + bonificações) em porcentagem).
 Além disso, o sistema suporta a entrada dos dados através de uma tabela (.xlxs), ao invés da interface gráfica, gerando vários relatórios ou gráficos para cada contribuinte (linha) da tabela.
 
-
 ## Tecnologias utilizadas
 
 Para o desenvolvimento desse sistema optou-se por utilizar as seguintes tecnologias:
@@ -60,9 +59,9 @@ Após rodar a ferramenta Lizard para todos os arquivos do sistema, obtivemos o s
 
 ## Identificação das funções mais complexas
 
-- Funções com valor de CCN que ultrapassem o valor limite (CCN = 15), são funções complexas demais e, portanto, de difícil manutenibilidade e reuso.
+- Funções com valor de CCN que ultrapassem o valor limite (CCN > 15), são funções complexas demais e, portanto, de difícil manutenibilidade e reuso.
 - A mensagem de alerta indica que existe uma função complexa demais entre todas analisadas, a função interface_visual(), com CCN = 18, podendo ser uma boa candidata a refatoração.
-- Embora não exceda o limite (CCN = 15), a função formulas_entrada() possui um valor relativamente alto, CCN = 11, e deve avaliada com atenção
+- Embora não exceda o limite (CCN > 15), a função formulas_entrada() possui um valor relativamente alto, CCN = 11, e deve avaliada com atenção.
 
   O relatório em detalhes pode ser obtido aqui [link]
 
