@@ -43,6 +43,8 @@ class ClienteMultiUnitario:
 
         self.logicacalculadora = None
 
+    def prencher_variaveis_multiplas(self):
+
         for i in range(0, self.n_entradas, 1):
 
             self.salario_base_list[i]             = self.entradas_de_multiplas_pessoas.iloc[i, 0]
@@ -86,7 +88,10 @@ class ClienteMultiUnitario:
                             self.mesinicio_list[j],self.anoinicio_list[j],self.mesfim_list[j],self.anofim_list[j],
                             self.numero_dependentes_list[j],self.pensao_alimenticia_list[j],self.outros_descontos_list[j],self.tipooferta_list[j])
 
-            logicacalculadoramultipla.formulas_entrada()
+            logicacalculadoramultipla.calculo_bonus_e_salario_bruto()
+            logicacalculadoramultipla.calculo_deducoes_e_salario_base()
+            logicacalculadoramultipla.calculo_irrf_recolhido_salario_liquido_aliquota()
+            logicacalculadoramultipla.definir_anos_vigencia()
 
             if (self.tipooferta_list[j] == 1):
 
