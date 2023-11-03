@@ -181,7 +181,10 @@ def interface_visual():
             mes_inicio,ano_inicio,mes_fim,ano_fim,
             numero_dependentes,pensao_alimenticia,outros_descontos,tipooferta)
 
-            logicacalculadora.formulas_entrada()
+            logicacalculadora.calculo_bonus_e_salario_bruto()
+            logicacalculadora.calculo_deducoes_e_salario_base()
+            logicacalculadora.calculo_irrf_recolhido_salario_liquido_aliquota()
+            logicacalculadora.definir_anos_vigencia()
 
             anos_vigencia = list(range(anos_vigencia_aux))
 
@@ -246,7 +249,10 @@ def interface_visual():
             mes_inicio,ano_inicio,mes_fim,ano_fim,
             numero_dependentes,pensao_alimenticia,outros_descontos,tipooferta)
 
-            logicacalculadora.formulas_entrada()
+            logicacalculadora.calculo_bonus_e_salario_bruto()
+            logicacalculadora.calculo_deducoes_e_salario_base()
+            logicacalculadora.calculo_irrf_recolhido_salario_liquido_aliquota()
+            logicacalculadora.definir_anos_vigencia()
 
             salario_base, salario_bruto, salario_base_de_calculo, anos_vigencia, salario_liquido, irrf_recolhido, aliquota_ = logicacalculadora.enviardadospararelatorio()
 
