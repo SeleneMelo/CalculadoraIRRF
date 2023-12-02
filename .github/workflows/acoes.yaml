@@ -1,0 +1,21 @@
+name: Testes Automáticos
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout do código
+      uses: actions/checkout@v2
+
+    - name: Configurar o ambiente
+      run: echo "Configurações para o ambiente"
+
+    - name: Instalar dependências e executar testes
+      run: echo "Instalando dependências e executando testes"
+
