@@ -14,7 +14,17 @@ class TestLogicaCalculadora(unittest.TestCase):
         self.assertEqual(self.calculadora.bonus, 800)
         self.assertEqual(self.calculadora.salario_bruto, 3800)
 
-    # Restante dos métodos de teste...
+    def test_calculo_irrf_recolhido_salario_liquido_aliquota(self):
+        self.calculadora.calculo_bonus_e_salario_bruto()
+        self.calculadora.calculo_deducoes_e_salario_base()
+        self.calculadora.calculo_irrf_recolhido_salario_liquido_aliquota()
+        self.assertEqual(self.calculadora.irrf_recolhido, 33.35)
+        self.assertEqual(self.calculadora.salario_liquido, 2920.11)
+        self.assertAlmostEqual(self.calculadora.aliquota_, 0.00876, places=5)
+
+    def test_definir_anos_vigencia(self):
+        self.calculadora.definir_anos_vigencia()
+        self.assertEqual(self.calculadora.anos_vigencia, ['2022'])
 
 if __name__ == '__main__':
     unittest.main()
