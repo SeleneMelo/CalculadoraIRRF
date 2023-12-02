@@ -18,6 +18,15 @@ class TestLogicaCalculadora(unittest.TestCase):
         self.calculadora.definir_anos_vigencia()
         self.assertEqual(self.calculadora.anos_vigencia, ['2022'])
 
+    def test_preparar_graficos(self):
+        self.calculadora.calculo_bonus_e_salario_bruto()
+        self.calculadora.calculo_deducoes_e_salario_base()
+        self.calculadora.calculo_irrf_recolhido_salario_liquido_aliquota()
+        graficos = self.calculadora.preparar_graficos(self.calculadora.salario_liquido, self.calculadora.irrf_recolhido,
+                                                      self.calculadora.salario_base, (self.calculadora.bonus_tempo + self.calculadora.bonus_formacao + self.calculadora.bonus_periculosidade),
+                                                      self.calculadora.salario_base_de_calculo, self.calculadora.total_deducoes)
+        self.assertEqual(len(graficos), 6)
+
 if __name__ == '__main__':
     unittest.main()
 
