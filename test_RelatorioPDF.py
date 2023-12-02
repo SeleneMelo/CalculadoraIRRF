@@ -2,13 +2,13 @@ import sys
 import os
 
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
-
+pip install reportlab
 import unittest
 from unittest.mock import Mock
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import mm
 from reportlab.lib.colors import HexColor
-from RelatorioPDF import RelatorioPDF
+from RelatorioPDF import RelatorioPDF 
 
 class TestRelatorioPDF(unittest.TestCase):
 
