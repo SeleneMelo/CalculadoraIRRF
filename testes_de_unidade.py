@@ -36,6 +36,14 @@ class TestLogicaCalculadora(unittest.TestCase):
                                                         self.calculadora.irrf_recolhido)
         self.assertEqual(len(relatorio), 6)
 
+    def test_enviardadosparagrafico(self):
+        dados_grafico = self.calculadora.enviardadosparagrafico()
+        self.assertEqual(len(dados_grafico), 7)
+
+    def test_enviardadospararelatorio(self):
+        dados_relatorio = self.calculadora.enviardadospararelatorio()
+        self.assertEqual(len(dados_relatorio), 7)
+
 if __name__ == '__main__':
     unittest.main()
 
