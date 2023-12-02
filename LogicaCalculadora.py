@@ -29,6 +29,8 @@ class LogicaCalculadora:
         self.salario_liquido        = 0
         self.anos_vigencia            = None
         self.irrf_recolhido = 0
+        self.total_deducoes = None  #Linha adicionada
+        self.aliquota_ = None  #Linha adicionada
 
     def calculo_bonus_e_salario_bruto(self):
 
@@ -97,6 +99,10 @@ class LogicaCalculadora:
         adicoes_list                 = list(range(self.anos_vigencia_aux))
         salario_base_de_calculo_list = list(range(self.anos_vigencia_aux))
         total_deducoes_list          = list(range(self.anos_vigencia_aux))
+
+        self.total_deducoes = None  #Adicionado
+        self.aliquota_ = None  #Adicionado
+
 
         if(self.anos_vigencia_aux == 1):
 
