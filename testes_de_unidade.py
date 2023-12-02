@@ -27,6 +27,15 @@ class TestLogicaCalculadora(unittest.TestCase):
                                                       self.calculadora.salario_base_de_calculo, self.calculadora.total_deducoes)
         self.assertEqual(len(graficos), 6)
 
+    def test_preparar_relatorio(self):
+        self.calculadora.calculo_bonus_e_salario_bruto()
+        self.calculadora.calculo_deducoes_e_salario_base()
+        self.calculadora.calculo_irrf_recolhido_salario_liquido_aliquota()
+        relatorio = self.calculadora.preparar_relatorio(self.calculadora.salario_base, self.calculadora.salario_bruto,
+                                                        self.calculadora.salario_base_de_calculo, self.calculadora.salario_liquido,
+                                                        self.calculadora.irrf_recolhido)
+        self.assertEqual(len(relatorio), 6)
+
 if __name__ == '__main__':
     unittest.main()
 
