@@ -1,6 +1,5 @@
 import unittest
-from unittest.mock import patch
-import numpy as np
+import os
 from Grafico import Grafico
 
 class TestGrafico(unittest.TestCase):
@@ -19,22 +18,26 @@ class TestGrafico(unittest.TestCase):
         )
 
     def test_criar_grafico1(self):
-        with patch("matplotlib.pyplot.show") as mock_show, patch("matplotlib.figure.Figure.savefig") as mock_savefig:
-            self.grafico.criargrafico1()
-        mock_show.assert_called_once()
-        mock_savefig.assert_called_once_with('Grafico 1 do contribuinte Teste.png', format='png')
+        self.grafico.criargrafico1()
+        self.assertTrue(os.path.isfile('Grafico 1 do contribuinte Teste.png'))
 
     def test_criar_grafico2(self):
-        with patch("matplotlib.pyplot.show") as mock_show, patch("matplotlib.pyplot.savefig") as mock_savefig:
-            self.grafico.criargrafico2()
-        mock_show.assert_called_once()
-        mock_savefig.assert_called_once_with('Grafico 2 do contribuinte Teste.png', format='png')
+        self.grafico.criargrafico2()
+        self.assertTrue(os.path.isfile('Grafico 2 do contribuinte Teste.png'))
 
     def test_criar_grafico3(self):
-        with patch("matplotlib.pyplot.show") as mock_show, patch("matplotlib.pyplot.savefig") as mock_savefig:
-            self.grafico.criargrafico3()
-        mock_show.assert_called_once()
-        mock_savefig.assert_called_once_with('grafico do contribuinte Teste.png', format='png')
+        self.grafico.criargrafico3()
+        self.assertTrue(os.path.isfile('grafico do contribuinte Teste.png'))
+
+    def tearDown(self):
+        # Limpar os arquivos de teste após os testes
+        if os.path.isfile('Grafico 1 do contribuinte Teste.png'):
+            os.remove('Grafico 1 do contribuinte Teste.png')
+        if os.path.isfile('Grafico 2 do contribuinte Teste.png'):
+            os.remove('Grafico 2 do contribuinte Teste.png')
+        if os.path.isfile('grafico do contribuinte Teste.png'):
+            os.remove('grafico do contribuinte Teste.png')
 
 if __name__ == '__main__':
     unittest.main()
+
