@@ -50,9 +50,6 @@ class TestConsistenciaDados(unittest.TestCase):
         cliente.criar_graficos_e_relatorios(tipo_oferta=1)
         cliente.criar_graficos_e_relatorios(tipo_oferta=2)
 
-        # Aqui, você compararia os dados dos gráficos com os dados dos relatórios
-        # Isso pode ser feito lendo os arquivos gerados e comparando os valores
-
         # Lembre-se de limpar os arquivos gerados após o teste
         os.remove('grafico_contribuinte_x.png')
         os.remove('relatorio_contribuinte_x.pdf')
