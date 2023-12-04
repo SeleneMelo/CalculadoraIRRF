@@ -8,9 +8,11 @@ class ClienteMultiUnitario:
 
     def __init__(self):
 
+       # Carrega os dados do Excel para o DataFrame
         self.entradas_de_multiplas_pessoas = pd.read_excel('entradas_de_multiplas_pessoas.xlsx')
 
-        self.n_entradas = len(self.entradas_em_massa.index)
+        # Correção: substituição de 'entradas_em_massa' por 'entradas_de_multiplas_pessoas'
+        self.n_entradas = len(self.entradas_de_multiplas_pessoas.index)
 
         self.salario_base_list             =          list(range(self.n_entradas))
         self.bonus_tempo_list              =          list(range(self.n_entradas))
