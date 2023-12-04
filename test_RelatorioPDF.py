@@ -1,41 +1,34 @@
-import sys
-import os
-
-sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 import unittest
-from unittest.mock import Mock
-from reportlab.pdfgen import canvas
-from reportlab.lib.units import mm
-from reportlab.lib.colors import HexColor
-from RelatorioPDF import RelatorioPDF 
+from RelatorioPDF import RelatorioPDF
+import os
 
 class TestRelatorioPDF(unittest.TestCase):
 
-    def setUp(self):
-        # Configurações iniciais que podem ser usadas em todos os testes
-        self.mock_canvas = Mock(spec=canvas.Canvas)
-
     def test_gerar_relatorio(self):
-        # Configuração específica para o teste
+        # Inicializa a classe
         relatorio = RelatorioPDF(
-            salario_base=1000.0,
-            salario_bruto=1200.0,
-            salario_base_de_calculo=900.0,
-            anos_vigencia=[2020, 2021],
-            salario_liquido=800.0,
-            irrf_recolhido=50.0,
-            aliquota=0.05,
-            nome_contribuinte="João",
+            salario_base=3000, 
+            salario_bruto=3800, 
+            salario_base_de_calculo=2500,
+            anos_vigencia=['2021', '2022', '2023'],
+            salario_liquido=3400, 
+            irrf_recolhido=400, 
+            aliquota=0.1,
+            nome_contribuinte="Teste", 
             cpf_contribuinte="123.456.789-00"
         )
 
-        # Execução do método a ser testado
-        relatorio.gerarrelatorio(self.mock_canvas)
+        # Chame o método gerarrelatorio
+        relatorio.gerarrelatorio()
 
-        # Verificação de chamadas ao canvas
-        self.mock_canvas.setFillColor.assert_called()
-        self.mock_canvas.setFont.assert_called_with("Helvetica", 13)
-        self.mock_canvas.drawString.assert_called_with(15, 300, "Bem vindo contribuinte João.")
+        # Verifique se o arquivo PDF foi criado
+        nome_arquivo = "Relatório de desconto de Teste.pdf"
+        self.assertTrue(os.path.isfile(nome_arquivo))
+
+        # Limpeza: remova o arquivo PDF após o teste
+        if os.path.isfile(nome_arquivo):
+            os.remove(nome_arquivo)
 
 if __name__ == '__main__':
     unittest.main()
+
