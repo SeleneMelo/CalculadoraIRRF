@@ -19,7 +19,7 @@ class TestGrafico(unittest.TestCase):
         )
 
     def test_criar_grafico1(self):
-        with patch("matplotlib.pyplot.show") as mock_show, patch("matplotlib.pyplot.savefig") as mock_savefig:
+        with patch("matplotlib.pyplot.show") as mock_show, patch("matplotlib.figure.Figure.savefig") as mock_savefig:
             self.grafico.criargrafico1()
         mock_show.assert_called_once()
         mock_savefig.assert_called_once_with('Grafico 1 do contribuinte Teste.png', format='png')
